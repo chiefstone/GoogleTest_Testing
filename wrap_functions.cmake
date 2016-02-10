@@ -5,4 +5,4 @@
 ################################################################
 
 #Add functions to be wrapped here!
-set(WRAP_FUNCTIONS_RAW memcmp)
+set(WRAP_FUNCTIONS_RAW )

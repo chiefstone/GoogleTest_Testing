@@ -41,7 +41,7 @@ extern "C" {
 //   __real_free(__ptr);
 //}
 
-int __real_memcmp (const void *__s1, const void *__s2, size_t __n);
+//int __real_memcmp (const void *__s1, const void *__s2, size_t __n);
 
 /*Flag to trigger wrapped code*/
 bool useWrapped = false;
@@ -49,20 +49,20 @@ bool useWrapped = false;
  * This function wraps the real memcpy.
  * The useWrapped flag will cause the return of a mocked value.
  */
-int __wrap_memcmp (const void *__s1, const void *__s2, size_t __n)
-{
-   int result = 0;
-    if(useWrapped)
-    {
-        //result = (int)mock();
-    }
-    else
-    {
-    printf("cmp: %p with %p, size is %i\n", __s1, __s2, __n);
-    result = __real_memcmp(__s1, __s2, __n);
-    }
-    return result;
-}
+//int __wrap_memcmp (const void *__s1, const void *__s2, size_t __n)
+//{
+//   int result = 0;
+//    if(useWrapped)
+//    {
+//        //result = (int)mock();
+//    }
+//    else
+//    {
+//    printf("cmp: %p with %p, size is %i\n", __s1, __s2, __n);
+//    result = __real_memcmp(__s1, __s2, __n);
+//    }
+//    return result;
+//}
 
 #ifdef __cpluplus
 }

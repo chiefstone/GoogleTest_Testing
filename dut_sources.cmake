@@ -5,8 +5,6 @@
 ################################################################
 
 #Source files in the DUT with relative path.
-#set(DUT_SOURCES ${CMAKE_SOURCE_DIR}/DUT/SDS/sds.cpp)
-set(DUT_SOURCES )
+set(DUT_SOURCES ${CMAKE_SOURCE_DIR}/DUT/split/split.cpp)
 #Include files in the DUT with relative path.
-#set(DUT_INCLUDES ${CMAKE_SOURCE_DIR}/DUT/SDS)
-set(DUT_INCLUDES )
+set(DUT_INCLUDES ${CMAKE_SOURCE_DIR}/DUT/split)

@@ -6,13 +6,11 @@
 ################################################################
 
 cmake_minimum_required(VERSION 2.8.7)
-project(UnitTesting CXX)
+project(UnitTesting C CXX)
 
 set(CMAKE_COLOR_MAKEFILE ON)
-enable_testing()
+#enable_testing()
 
-# Added for CTest
-include(CTest)
 # Added for External Projects
 include(ExternalProject)
 include(wrap_functions.cmake)
@@ -104,13 +102,25 @@ add_subdirectory(Stubs)
 add_subdirectory(DUT)
 add_subdirectory(testcases)
 
-add_test(UnitTesting ${EXECUTABLE_OUTPUT_PATH}/UnitTesting)
+################################################################
+# Custom test target
+################################################################
+ADD_CUSTOM_TARGET(test
+# Cleanup 
+COMMAND rm -rf ${CMAKE_CURRENT_SOURCE_DIR}/build/testAll.xml
+
+# Run tests
+COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/build/UnitTesting --gtest_output="xml:./testAll.xml"
+DEPENDS UnitTesting
+)
+
+find_package(Threads)
 
 add_executable(UnitTesting main.cpp)
 add_dependencies(UnitTesting lcov googletest  Stubs DUT testcases )
 
 if(CYGWIN)
-target_link_libraries(UnitTesting Stubs DUT testcases libgtest.a libgmock.a gcov)
+target_link_libraries(UnitTesting Stubs DUT testcases libgtest.a libgtest_main.a libgmock.a gcov  ${CMAKE_THREAD_LIBS_INIT})
 else(CYGWIN)
-target_link_libraries(UnitTesting Stubs DUT testcases libgtest.a libgmock.a gcov)
+target_link_libraries(UnitTesting Stubs DUT testcases libgtest.a libgtest_main.a libgmock.a gcov  ${CMAKE_THREAD_LIBS_INIT})
 endif(CYGWIN)
