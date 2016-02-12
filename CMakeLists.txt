@@ -65,22 +65,25 @@ find_library(GTEST_PATH NAMES libgtest.a PATHS /usr/local/lib)
 find_path(GTEST_INCLUDE_PATH NAMES gtest.h PATHS /usr/local/include/gtest)
 #Set the paths for gtest
 message(STATUS GTEST_PATH=${GTEST_PATH})
+message(STATUS GTEST_INCLUDE_PATH=${GTEST_INCLUDE_PATH})
 if(GTEST_PATH AND GTEST_INCLUDE_PATH)
 get_filename_component(GTEST_LIBRARY_PATH ${GTEST_PATH} PATH)
 else(GTEST_PATH AND GTEST_INCLUDE_PATH)
 ################################################################
 # External: build and install googletest
 ################################################################
-if(NOT IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/googletest/build)
-  file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/googletest/build)
-endif(NOT IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/googletest/build)
+if(NOT IS_DIRECTORY ${PROJECT_SOURCE_DIR}/googletest/build)
+  file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/googletest/build)
+endif(NOT IS_DIRECTORY ${PROJECT_SOURCE_DIR}/googletest/build)
 ExternalProject_Add(googletest
-    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/googletest
-    CONFIGURE_COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}/googletest/build && cmake -Dgtest_build_tests=ON -Dgmock_build_tests=ON ..
-    BUILD_COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}/googletest/build && make 
-    INSTALL_COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}/googletest/build && ${MAKE_INSTALL_STRING}
+    SOURCE_DIR ${PROJECT_SOURCE_DIR}/googletest
+    CONFIGURE_COMMAND cd ${PROJECT_SOURCE_DIR}/googletest/build && cmake -Dgtest_build_tests=ON -Dgmock_build_tests=ON ..
+    BUILD_COMMAND cd ${PROJECT_SOURCE_DIR}/googletest/build && make 
+    INSTALL_COMMAND cd ${PROJECT_SOURCE_DIR}/googletest/build && ${MAKE_INSTALL_STRING}
 )
+
 set(GTEST_INCLUDE_PATH /usr/local/include/gtest)
+set(GTEST_INCLUDE_PATH ${GTEST_INCLUDE_PATH} CACHE FILEPATH "" FORCE)
 set(GMOCK_INCLUDE_PATH /usr/local/include/gmock)
 set(GTEST_LIBRARY_PATH /usr/local/lib)
 endif(GTEST_PATH AND GTEST_INCLUDE_PATH)
@@ -131,7 +134,7 @@ DEPENDS UnitTesting
 find_package(Threads)
 
 add_executable(UnitTesting main.cpp)
-add_dependencies(UnitTesting lcov googletest  Stubs DUT testcases )
+add_dependencies(UnitTesting googletest lcov Stubs DUT testcases )
 
 if(CYGWIN)
 target_link_libraries(UnitTesting Stubs DUT libgtest.a libgtest_main.a libgmock.a gcov  ${CMAKE_THREAD_LIBS_INIT})

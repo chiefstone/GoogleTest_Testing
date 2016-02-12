@@ -156,9 +156,9 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE_COBERTURA _targetname _testrunner _outputname
 	ENDIF() # NOT PYTHON_EXECUTABLE
 
 	IF(NOT GCOVR_PATH)
-		MESSAGE(FATAL_ERROR "gcovr not found! Aborting...")
-		ADD_CUSTOM_TARGET(${_targetname})
-    ELSE()
+		MESSAGE(STATUS "gcovr not found! Aborting...")
+		#ADD_CUSTOM_TARGET(${_targetname})
+    ELSE(NOT GCOVR_PATH)
 	ADD_CUSTOM_TARGET(${_targetname}
 
 		# Run tests
@@ -174,7 +174,7 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE_COBERTURA _targetname _testrunner _outputname
 		COMMAND ;
 		COMMENT "Cobertura code coverage report saved in ${_outputname}.xml."
 	)
-   ENDIF() # NOT GCOVR_PATH
+   ENDIF(NOT GCOVR_PATH) # NOT GCOVR_PATH
 	
 
 ENDFUNCTION() # SETUP_TARGET_FOR_COVERAGE_COBERTURA
