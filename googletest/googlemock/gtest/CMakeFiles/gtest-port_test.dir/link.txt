@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/gtest-port_test.dir/test/gtest-port_test.cc.o  -o gtest-port_test  -L/home/jens/workspace/googletest/googlemock/gtest/src -rdynamic libgtest_main.a libgtest.a -lpthread -Wl,-rpath,/home/jens/workspace/googletest/googlemock/gtest/src 

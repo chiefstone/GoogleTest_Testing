@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/gtest_xml_outfile2_test_.dir/test/gtest_xml_outfile2_test_.cc.o  -o gtest_xml_outfile2_test_  -L/home/jens/workspace/googletest/googlemock/gtest/src -rdynamic libgtest_main.a libgtest.a -lpthread -Wl,-rpath,/home/jens/workspace/googletest/googlemock/gtest/src 

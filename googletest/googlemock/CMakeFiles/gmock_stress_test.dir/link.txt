@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/gmock_stress_test.dir/test/gmock_stress_test.cc.o  -o gmock_stress_test -rdynamic libgmock.a -lpthread 
