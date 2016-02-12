@@ -45,12 +45,25 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 include(CodeCoverage)
 include(CorrectWindowsPaths)
 
+################################################################
+# Install command
+################################################################
+if(CYGWIN)
+set(MAKE_INSTALL_STRING "make install")
+else(CYGWIN)
+set(MAKE_INSTALL_STRING "sudo make install")
+endif(CYGWIN)
+
+################################################################
+# Create target for codecoverage
+################################################################
 SETUP_TARGET_FOR_COVERAGE(coverage UnitTesting coverage)
 SETUP_TARGET_FOR_COVERAGE_COBERTURA(cobertura UnitTesting cobertura)
 
+#Check if gtest is already installed
 find_library(GTEST_PATH NAMES libgtest.a PATHS /usr/local/lib)
 find_path(GTEST_INCLUDE_PATH NAMES gtest.h PATHS /usr/local/include/gtest)
-
+#Set the paths for gtest
 message(STATUS GTEST_PATH=${GTEST_PATH})
 if(GTEST_PATH AND GTEST_INCLUDE_PATH)
 get_filename_component(GTEST_LIBRARY_PATH ${GTEST_PATH} PATH)
@@ -65,13 +78,14 @@ ExternalProject_Add(googletest
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/googletest
     CONFIGURE_COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}/googletest/build && cmake -Dgtest_build_tests=ON -Dgmock_build_tests=ON ..
     BUILD_COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}/googletest/build && make 
-    INSTALL_COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}/googletest/build && sudo make install
+    INSTALL_COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}/googletest/build && ${MAKE_INSTALL_STRING}
 )
 set(GTEST_INCLUDE_PATH /usr/local/include/gtest)
 set(GMOCK_INCLUDE_PATH /usr/local/include/gmock)
 set(GTEST_LIBRARY_PATH /usr/local/lib)
 endif(GTEST_PATH AND GTEST_INCLUDE_PATH)
 
+#Check if LCOV is installed
 find_program(LCOV_PATH NAMES lcov PATHS /usr/bin /usr/local/bin)
 
 if(LCOV_PATH)
@@ -84,7 +98,7 @@ ExternalProject_Add(lcov
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lcov
     CONFIGURE_COMMAND cd .
     BUILD_COMMAND cd .
-    INSTALL_COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}/lcov/ && make install
+    INSTALL_COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}/lcov/ && ${MAKE_INSTALL_STRING}
 )
 endif(LCOV_PATH)
 
@@ -120,7 +134,7 @@ add_executable(UnitTesting main.cpp)
 add_dependencies(UnitTesting lcov googletest  Stubs DUT testcases )
 
 if(CYGWIN)
-target_link_libraries(UnitTesting Stubs DUT testcases libgtest.a libgtest_main.a libgmock.a gcov  ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(UnitTesting Stubs DUT libgtest.a libgtest_main.a libgmock.a gcov  ${CMAKE_THREAD_LIBS_INIT})
 else(CYGWIN)
-target_link_libraries(UnitTesting Stubs DUT testcases libgtest.a libgtest_main.a libgmock.a gcov  ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(UnitTesting Stubs DUT libgtest.a libgtest_main.a libgmock.a gcov  ${CMAKE_THREAD_LIBS_INIT})
 endif(CYGWIN)

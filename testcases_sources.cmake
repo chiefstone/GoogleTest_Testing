@@ -5,4 +5,4 @@
 ################################################################
 
 #Add files containing testcases here.
-set(TEST_SOURCES testcases.cpp)
+#set(TEST_SOURCES)

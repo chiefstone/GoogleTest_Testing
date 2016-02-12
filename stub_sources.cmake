@@ -5,4 +5,4 @@
 ################################################################
 
 #Add files containing stubs here
-set(STUB_SOURCES Stubs.cpp)
+set(STUB_SOURCES Stubs.cpp stringReturnMock.cpp)

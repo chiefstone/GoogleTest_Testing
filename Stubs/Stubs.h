@@ -1,8 +1,8 @@
 /**
- * Definition of stubs
- * Author: Jens Nelke
- * Company: Brunel Communications
- * Date: 25.01.2016
+ * @file Stubs.h
+ * @author Jens Nelke
+ * @date 25.01.2016
+ * @brief Place for wrapping functions and writing stubs
  */
 
 #ifndef STUBS_H_

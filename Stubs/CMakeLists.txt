@@ -5,7 +5,7 @@
 # Date: 25.01.2016
 ################################################################
 
-include(${PROJECT_SOURCE_DIR}/stub_sources.cmake) 
+include(${PROJECT_SOURCE_DIR}/stub_sources.cmake ) 
 
 add_definitions(-DMODULE_TEST)
 
