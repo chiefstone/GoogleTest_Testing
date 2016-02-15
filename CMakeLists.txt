@@ -49,9 +49,9 @@ include(CorrectWindowsPaths)
 # Install command
 ################################################################
 if(CYGWIN)
-set(MAKE_INSTALL_STRING "make install")
+set(MAKE_INSTALL_STRING make install)
 else(CYGWIN)
-set(MAKE_INSTALL_STRING "sudo make install")
+set(MAKE_INSTALL_STRING sudo make install)
 endif(CYGWIN)
 
 ################################################################
@@ -115,6 +115,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${GTEST_INCLUDE_PATH} ${GMOCK_IN
 endif(GTEST_INCLUDE_PATH)
 LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${GTEST_LIBRARY_PATH})
 
+add_subdirectory(googletest)
 add_subdirectory(Stubs)
 add_subdirectory(DUT)
 add_subdirectory(testcases)
@@ -137,7 +138,7 @@ add_executable(UnitTesting main.cpp)
 add_dependencies(UnitTesting googletest lcov Stubs DUT testcases )
 
 if(CYGWIN)
-target_link_libraries(UnitTesting Stubs DUT libgtest.a libgtest_main.a libgmock.a gcov  ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(UnitTesting gtest Stubs DUT libgtest.a libgtest_main.a libgmock.a gcov  ${CMAKE_THREAD_LIBS_INIT})
 else(CYGWIN)
-target_link_libraries(UnitTesting Stubs DUT libgtest.a libgtest_main.a libgmock.a gcov  ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(UnitTesting gtest Stubs DUT libgtest.a libgtest_main.a libgmock.a gcov  ${CMAKE_THREAD_LIBS_INIT})
 endif(CYGWIN)
