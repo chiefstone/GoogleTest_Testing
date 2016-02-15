@@ -77,7 +77,7 @@ if(NOT IS_DIRECTORY ${PROJECT_SOURCE_DIR}/googletest/build)
 endif(NOT IS_DIRECTORY ${PROJECT_SOURCE_DIR}/googletest/build)
 ExternalProject_Add(googletest
     SOURCE_DIR ${PROJECT_SOURCE_DIR}/googletest
-    CONFIGURE_COMMAND cd ${PROJECT_SOURCE_DIR}/googletest/build && cmake -Dgtest_build_tests=ON -Dgmock_build_tests=ON ..
+    CONFIGURE_COMMAND cd ${PROJECT_SOURCE_DIR}/googletest/build && cmake -Dgtest_build_tests=OFF -Dgmock_build_tests=OFF ..
     BUILD_COMMAND cd ${PROJECT_SOURCE_DIR}/googletest/build && make 
     INSTALL_COMMAND cd ${PROJECT_SOURCE_DIR}/googletest/build && ${MAKE_INSTALL_STRING}
 )
